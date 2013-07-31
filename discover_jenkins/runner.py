@@ -67,13 +67,6 @@ class DiscoverCIRunner(DiscoverRunner):
                 instance = cls(output_dir=output_dir, **options)
                 self.tasks.append(instance)
 
-    def setup_test_environment(self, **kwargs):
-        super(DiscoverCIRunner, self).setup_test_environment(**kwargs)
-        if self.jenkins:
-            signals.setup_test_environment.send(sender=self)
-
-    def run_suite(self, suite, **kwargs):
-        if self.jenkins:
             # Connect the signals to the listeners for each task that should be
             # run.
             for signal_name, signal in inspect.getmembers(signals,
@@ -83,6 +76,13 @@ class DiscoverCIRunner(DiscoverRunner):
                     if signal_handler:
                         signal.connect(signal_handler)
 
+    def setup_test_environment(self, **kwargs):
+        super(DiscoverCIRunner, self).setup_test_environment(**kwargs)
+        if self.jenkins:
+            signals.setup_test_environment.send(sender=self)
+
+    def run_suite(self, suite, **kwargs):
+        if self.jenkins:
             signals.before_suite_run.send(sender=self)
 
             # Use the XMLTestResult so that results can be saved as XML
