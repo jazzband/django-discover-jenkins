@@ -1,3 +1,0 @@
-[submodule "discover_jenkins/tasks/csslint"]
-	path = discover_jenkins/tasks/csslint
-	url = https://github.com/stubbornella/csslint.git

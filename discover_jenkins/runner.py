@@ -17,52 +17,63 @@ from .results import XMLTestResult
 from .settings import TASKS, OUTPUT_DIR
 
 
+def get_task_options():
+    """Get the options for each task that will be run"""
+    options = ()
+
+    task_classes = [import_module(module_name).Task for module_name in TASKS]
+    for cls in task_classes:
+        options += cls.option_list
+
+    return options
+
+
 class DiscoverCIRunner(DiscoverRunner):
     """
     A Django test runner that runs tasks for Jenkins and dumps the results to
     an XML file.
     """
-    option_list = DiscoverRunner.option_list + (
-        make_option('--jenkins',
-            action='store_true', dest='jenkins', default=False,
-            help='Process the Jenkins tasks from TEST_JENKINS_TASKS.'),
-        make_option('--output-dir',
-            action='store', dest='output_dir', default=OUTPUT_DIR,
-            help='Top level of project for unittest discovery.'),
+    option_list = DiscoverRunner.option_list + get_task_options() + (
+        make_option(
+            '--jenkins',
+            action='store_true',
+            dest='jenkins',
+            default=False,
+            help='Process the Jenkins tasks from TEST_JENKINS_TASKS.'
+        ),
+        make_option(
+            '--output-dir',
+            action='store',
+            dest='output_dir',
+            default=OUTPUT_DIR,
+            help='Top level of project for unittest discovery.'
+        ),
     )
 
-    def __init__(self, jenkins=False, output_dir=None, **kwargs):
-        super(DiscoverCIRunner, self).__init__(**kwargs)
+    def __init__(self, jenkins=False, output_dir=None, **options):
+        super(DiscoverCIRunner, self).__init__(**options)
         self.jenkins = jenkins
 
-        if jenkins:
+        if self.jenkins:
             self.output_dir = output_dir
 
             # Import each requested task
-            self.tasks_cls = [import_module(module_name).Task
-                              for module_name in TASKS]
+            task_classes = [import_module(module_name).Task
+                            for module_name in TASKS]
+
+            # Instantiate the tasks
+            self.tasks = []
+            for cls in task_classes:
+                instance = cls(output_dir=output_dir, **options)
+                self.tasks.append(instance)
 
     def setup_test_environment(self, **kwargs):
-        super(DiscoverCIRunner, self).setup_test_environment()
+        super(DiscoverCIRunner, self).setup_test_environment(**kwargs)
         if self.jenkins:
             signals.setup_test_environment.send(sender=self)
 
-    def build_suite(self, *args, **kwargs):
-        suite = super(DiscoverCIRunner, self).build_suite(*args, **kwargs)
-        if self.jenkins:
-            signals.build_suite.send(sender=self, suite=suite)
-        return suite
-
-    def teardown_test_environment(self, **kwargs):
-        super(DiscoverCIRunner, self).teardown_test_environment()
-        if self.jenkins:
-            signals.teardown_test_environment.send(sender=self)
-
     def run_suite(self, suite, **kwargs):
         if self.jenkins:
-            # Instantiate the tasks
-            self.tasks = self.get_tasks(suite, output_dir=self.output_dir)
-
             # Connect the signals to the listeners for each task that should be
             # run.
             for signal_name, signal in inspect.getmembers(signals,
@@ -90,6 +101,7 @@ class DiscoverCIRunner(DiscoverRunner):
             return result
         return super(DiscoverCIRunner, self).run_suite(suite, **kwargs)
 
-    def get_tasks(self, *test_labels, **options):
-        """Instantiate all task instances"""
-        return [task_cls(test_labels, options) for task_cls in self.tasks_cls]
+    def teardown_test_environment(self, **kwargs):
+        super(DiscoverCIRunner, self).teardown_test_environment(**kwargs)
+        if self.jenkins:
+            signals.teardown_test_environment.send(sender=self)

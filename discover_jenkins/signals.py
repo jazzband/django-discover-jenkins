@@ -6,8 +6,6 @@ teardown_test_environment = Signal()
 before_suite_run = Signal()
 after_suite_run = Signal()
 
-build_suite = Signal(providing_args=["suite"])
-
 test_failure = Signal(providing_args=['test', 'err'])
 test_error = Signal(providing_args=['test', 'err'])
 test_success = Signal(providing_args=['test'])
