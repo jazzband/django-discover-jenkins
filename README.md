@@ -1,7 +1,7 @@
 django-discover-jenkins
 =======================
 
-A minimal fork of django-jenkins designed to work with the discover runner, made with simplicity in mind.
+A streamlined fork of django-jenkins designed to work with the default test command and the discover runner.
 
 Why?
 ----
