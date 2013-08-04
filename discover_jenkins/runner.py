@@ -50,10 +50,10 @@ def get_task_options():
     return options
 
 
-class DiscoverCIRunner(DiscoverRunner):
+class CIRunner(object):
     """
-    A Django test runner that runs tasks for Jenkins and dumps the results to
-    an XML file.
+    A Django test runner mixin that runs tasks for Jenkins and dumps the
+    results to an XML file.
     """
     option_list = DiscoverRunner.option_list + get_task_options() + (
         make_option(
@@ -73,7 +73,7 @@ class DiscoverCIRunner(DiscoverRunner):
     )
 
     def __init__(self, jenkins=False, output_dir=None, **options):
-        super(DiscoverCIRunner, self).__init__(**options)
+        super(CIRunner, self).__init__(**options)
         self.jenkins = jenkins
 
         if self.jenkins:
@@ -89,7 +89,7 @@ class DiscoverCIRunner(DiscoverRunner):
                 self.tasks.append(instance)
 
     def setup_test_environment(self, **kwargs):
-        super(DiscoverCIRunner, self).setup_test_environment(**kwargs)
+        super(CIRunner, self).setup_test_environment(**kwargs)
         if self.jenkins:
             for task in self.tasks:
                 if hasattr(task, 'setup_test_environment'):
@@ -117,11 +117,17 @@ class DiscoverCIRunner(DiscoverRunner):
                     task.after_suite_run(suite, **kwargs)
 
             return result
-        return super(DiscoverCIRunner, self).run_suite(suite, **kwargs)
+        # If Jenkins is not enabled, just run the suite as normal
+        return super(CIRunner, self).run_suite(suite, **kwargs)
 
     def teardown_test_environment(self, **kwargs):
-        super(DiscoverCIRunner, self).teardown_test_environment(**kwargs)
+        super(CIRunner, self).teardown_test_environment(**kwargs)
         if self.jenkins:
             for task in self.tasks:
                 if hasattr(task, 'teardown_test_environment'):
                     task.teardown_test_environment(**kwargs)
+
+
+class DiscoverCIRunner(DiscoverRunner, CIRunner):
+    """The CIRunner mixin applied to the discover runner"""
+    pass
