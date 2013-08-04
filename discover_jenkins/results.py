@@ -5,7 +5,6 @@ from itertools import groupby
 from xml.sax.saxutils import XMLGenerator
 from xml.sax.xmlreader import AttributesImpl
 from django.utils.unittest import TextTestResult
-from discover_jenkins import signals
 from discover_jenkins.utils import total_seconds
 
 try:
@@ -78,7 +77,6 @@ class XMLTestResult(TextTestResult):
         self.currentTestInfo.result = TestInfo.RESULT.ERROR
         self.currentTestInfo.err = err
         super(XMLTestResult, self).addError(test, err)
-        signals.test_error.send(sender=self, test=test, err=err)
 
     def addFailure(self, test, err):
         """
@@ -88,7 +86,6 @@ class XMLTestResult(TextTestResult):
         self.currentTestInfo.result = TestInfo.RESULT.FAILURE
         self.currentTestInfo.err = err
         super(XMLTestResult, self).addFailure(test, err)
-        signals.test_failure.send(sender=self, test=test, err=err)
 
     def addSuccess(self, test):
         """
@@ -96,7 +93,6 @@ class XMLTestResult(TextTestResult):
         """
         self.currentTestInfo.result = TestInfo.RESULT.SUCCESS
         super(XMLTestResult, self).addSuccess(test)
-        signals.test_success.send(sender=self, test=test)
 
     def addSkip(self, test, reason):
         """
@@ -113,7 +109,6 @@ class XMLTestResult(TextTestResult):
         self.currentTestInfo.result = TestInfo.RESULT.EXPECTED_FAILURE
         self.currentTestInfo.err = err
         super(XMLTestResult, self).addExpectedFailure(test, err)
-        signals.test_expected_failure.send(sender=self, test=test, err=err)
 
     def addUnexpectedSuccess(self, test):
         """
@@ -121,7 +116,6 @@ class XMLTestResult(TextTestResult):
         """
         self.currentTestInfo.result = TestInfo.RESULT.UNEXPECTED_SUCCESS
         super(XMLTestResult, self).addUnexpectedSuccess(test)
-        signals.test_unexpected_success.send(sender=self, test=test)
 
     def _exc_info_to_string(self, err, test):
         """
