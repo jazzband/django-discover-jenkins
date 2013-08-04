@@ -55,7 +55,7 @@ class CIRunner(object):
     A Django test runner mixin that runs tasks for Jenkins and dumps the
     results to an XML file.
     """
-    option_list = DiscoverRunner.option_list + get_task_options() + (
+    option_list = get_task_options() + (
         make_option(
             '--jenkins',
             action='store_true',
@@ -130,4 +130,4 @@ class CIRunner(object):
 
 class DiscoverCIRunner(DiscoverRunner, CIRunner):
     """The CIRunner mixin applied to the discover runner"""
-    pass
+    option_list = DiscoverRunner.option_list + CIRunner.option_list
