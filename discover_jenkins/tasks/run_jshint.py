@@ -117,18 +117,18 @@ class JSHintTask(object):
             from django.contrib.staticfiles import finders
 
             for finder in finders.get_finders():
-                for path, storage in finder.list(self.exclude):
+                for path, storage in finder.list(ignore_patterns=None):
                     path = os.path.join(storage.location, path)
                     if path.endswith('.js') and in_tested_locations(path):
-                        yield path
+                        if not is_excluded(path):
+                            yield path
         else:
             # scan apps directories for static folders
             for location in locations:
                 for dirpath, dirnames, filenames in \
                         os.walk(os.path.join(location, 'static')):
-                    for filename in filenames:
-                        path = os.path.join(dirpath, filename)
-                        if filename.endswith('.js') and \
-                                in_tested_locations(path) and not \
-                                    is_excluded(path):
-                            yield path
+                    for f in filenames:
+                        path = os.path.join(dirpath)
+                        if path.endswith('.js') and in_tested_locations(path):
+                            if not is_excluded(path):
+                                yield path

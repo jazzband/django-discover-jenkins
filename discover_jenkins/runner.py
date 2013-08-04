@@ -128,6 +128,6 @@ class CIRunner(object):
                     task.teardown_test_environment(**kwargs)
 
 
-class DiscoverCIRunner(DiscoverRunner, CIRunner):
+class DiscoverCIRunner(CIRunner, DiscoverRunner):
     """The CIRunner mixin applied to the discover runner"""
     option_list = DiscoverRunner.option_list + CIRunner.option_list
