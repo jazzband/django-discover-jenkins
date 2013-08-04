@@ -20,7 +20,7 @@ def default_config_path():
     return os.path.join(root_dir, 'pylint.rc')
 
 
-class Task(object):
+class PyLintTask(object):
     option_list = (
         make_option(
             "--pylint-rcfile",

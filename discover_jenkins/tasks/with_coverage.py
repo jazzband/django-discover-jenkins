@@ -17,7 +17,7 @@ def default_config_path():
     return None
 
 
-class Task(object):
+class CoverageTask(object):
     option_list = (
         make_option(
             "--coverage-rcfile",

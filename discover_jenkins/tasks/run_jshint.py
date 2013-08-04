@@ -12,7 +12,7 @@ from ..utils import CalledProcessError, get_app_locations
 from ..settings import JSHINT_CHECKED_FILES, JSHINT_RCFILE, JSHINT_EXCLUDE
 
 
-class Task(object):
+class JSHintTask(object):
     option_list = (
         make_option(
             "--jshint-no-staticdirs",
