@@ -2,6 +2,7 @@ import inspect
 
 from optparse import make_option
 
+from django.core.exceptions import ImproperlyConfigured
 from django.utils import unittest
 from django.utils.importlib import import_module
 
@@ -12,16 +13,37 @@ except ImportError:
     # Fallback to third-party app on Django 1.5
     from discover_runner.runner import DiscoverRunner
 
-from . import signals
 from .results import XMLTestResult
 from .settings import TASKS, OUTPUT_DIR
+
+
+def get_tasks():
+    """Get the imported task classes for each task that will be run"""
+    task_classes = []
+    for task_path in TASKS:
+        try:
+            module, classname = task_path.rsplit('.', 1)
+        except ValueError:
+            raise ImproperlyConfigured('%s isn\'t a task module' % task_path)
+        try:
+            mod = import_module(module)
+        except ImportError as e:
+            raise ImproperlyConfigured('Error importing task %s: "%s"'
+                                       % (module, e))
+        try:
+            task_class = getattr(mod, classname)
+        except AttributeError:
+            raise ImproperlyConfigured('Task module "%s" does not define a '
+                                       '"%s" class' % (module, classname))
+        task_classes.append(task_class)
+    return task_classes
 
 
 def get_task_options():
     """Get the options for each task that will be run"""
     options = ()
 
-    task_classes = [import_module(module_name).Task for module_name in TASKS]
+    task_classes = get_tasks()
     for cls in task_classes:
         options += cls.option_list
 
@@ -58,32 +80,26 @@ class DiscoverCIRunner(DiscoverRunner):
             self.output_dir = output_dir
 
             # Import each requested task
-            task_classes = [import_module(module_name).Task
-                            for module_name in TASKS]
+            task_classes = get_tasks()
 
             # Instantiate the tasks
             self.tasks = []
-            for cls in task_classes:
-                instance = cls(output_dir=output_dir, **options)
+            for task_class in task_classes:
+                instance = task_class(output_dir=output_dir, **options)
                 self.tasks.append(instance)
-
-            # Connect the signals to the listeners for each task that should be
-            # run.
-            for signal_name, signal in inspect.getmembers(signals,
-                                                    predicate=lambda obj: obj):
-                for task in self.tasks:
-                    signal_handler = getattr(task, signal_name, None)
-                    if signal_handler:
-                        signal.connect(signal_handler)
 
     def setup_test_environment(self, **kwargs):
         super(DiscoverCIRunner, self).setup_test_environment(**kwargs)
         if self.jenkins:
-            signals.setup_test_environment.send(sender=self)
+            for task in self.tasks:
+                if hasattr(task, 'setup_test_environment'):
+                    task.setup_test_environment(**kwargs)
 
     def run_suite(self, suite, **kwargs):
         if self.jenkins:
-            signals.before_suite_run.send(sender=self)
+            for task in self.tasks:
+                if hasattr(task, 'before_suite_run'):
+                    task.before_suite_run(suite, **kwargs)
 
             # Use the XMLTestResult so that results can be saved as XML
             result = unittest.TextTestRunner(
@@ -96,7 +112,9 @@ class DiscoverCIRunner(DiscoverRunner):
             # Dump the results to an XML file
             result.dump_xml(self.output_dir)
 
-            signals.after_suite_run.send(sender=self)
+            for task in self.tasks:
+                if hasattr(task, 'after_suite_run'):
+                    task.after_suite_run(suite, **kwargs)
 
             return result
         return super(DiscoverCIRunner, self).run_suite(suite, **kwargs)
@@ -104,4 +122,6 @@ class DiscoverCIRunner(DiscoverRunner):
     def teardown_test_environment(self, **kwargs):
         super(DiscoverCIRunner, self).teardown_test_environment(**kwargs)
         if self.jenkins:
-            signals.teardown_test_environment.send(sender=self)
+            for task in self.tasks:
+                if hasattr(task, 'teardown_test_environment'):
+                    task.teardown_test_environment(**kwargs)
