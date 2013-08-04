@@ -8,7 +8,7 @@ Why?
 
 The overall goal is to run tests on Jenkins the same way you do on your local machine. This project is designed to take advantage of [django-discover-runner](https://github.com/jezdez/django-discover-runner/), which is the default test runner in Django 1.6. Instead of using a setting to list which apps should be tested, or accepting Django-specific test labels, it uses the official test discovery feature of the new unittest2.
 
-Also, the original [django-jenkins](https://github.com/kmmbvnr/django-jenkins) project doesn't take advantage of improvements to testing introduced in Django 1.4. Special management commands are no longer needed, as test runners themself can add options that are handled by the built-in `test` command.
+Also, the original [django-jenkins](https://github.com/kmmbvnr/django-jenkins) project doesn't take advantage of improvements to testing introduced in Django 1.4. Special management commands are no longer needed, as test runners themselves can add options that are handled by the built-in `test` command.
 
 
 What's Changed?
