@@ -22,6 +22,6 @@ What's Changed?
 Who?
 ----
 
-First and foremost, the authors of [django-jenkins](https://github.com/kmmbvnr/django-jenkins) are responsible for the basis of most of this code. I ([Brandon Konkle](https://github.com/bkonkle)) just took it apart and put it back together again in a different way. Thank you to the contributors of that project!
+First and foremost, the authors of [django-jenkins](https://github.com/kmmbvnr/django-jenkins) are responsible for the basis of most of this code. I ([Brandon Konkle](https://github.com/bkonkle)) just took it apart and put it back together again in a different way, then fixed or reworked some things. Thank you to the contributors of that project!
 
 For the full list of original authors and for the contributors to this project, see the AUTHORS.md file.
