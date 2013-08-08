@@ -6,7 +6,7 @@ from optparse import make_option
 from discover_jenkins.utils import check_output, get_app_locations
 
 
-class SloccountTask(object):
+class SlocCountTask(object):
     option_list = (
         make_option(
             "--sloccount-with-migrations",
