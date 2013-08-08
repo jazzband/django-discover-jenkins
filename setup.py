@@ -31,7 +31,7 @@ if sys.argv[-1] == 'publish':
 
 
 setup(
-    name='django-discover-runner',
+    name='django-discover-jenkins',
     version=version,
     description="A minimal fork of django-jenkins designed to work with the "
                 "discover runner, made with simplicity in mind",
