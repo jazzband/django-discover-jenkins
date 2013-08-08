@@ -1,4 +1,4 @@
-django>=1.5
+django>=1.6
 pylint>=0.23
 coverage>=3.4
 mock>=1.0.1
