@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
 import re
 import os
 import sys
@@ -17,15 +17,6 @@ def get_author_and_version(package):
     author = re.search("__author__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
     version = re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
     return author, version
-
-
-def get_packages(package):
-    """
-    Return root package and all sub-packages.
-    """
-    return [dirpath
-            for dirpath, dirnames, filenames in os.walk(package)
-            if os.path.exists(os.path.join(dirpath, '__init__.py'))]
 
 
 author, version = get_author_and_version('discover_jenkins')
@@ -45,6 +36,12 @@ setup(
     description="A minimal fork of django-jenkins designed to work with the "
                 "discover runner, made with simplicity in mind",
     long_description=LONG_DESCRIPTION,
+    url='https://github.com/lincolnloop/django-discover-jenkins',
+    license='BSD',
+    author=author,
+    author_email='brandon@lincolnloop.com',
+    packages=find_packages(exclude=['tests*']),
+    include_package_data=True,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
@@ -58,11 +55,4 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords=['django', 'discover', 'runner', 'jenkins', 'hudson'],
-    author=author,
-    author_email='brandon@lincolnloop.com',
-    url='https://github.com/lincolnloop/django-discover-jenkins',
-    license='BSD',
-    packages=get_packages('discover_jenkins'),
-    include_package_data=True,
-    zip_safe=False,
 )
