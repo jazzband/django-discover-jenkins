@@ -2,4 +2,4 @@ django>=1.5
 pylint>=0.23
 coverage>=3.4
 mock>=1.0.1
-discover_jenkins>=1.0
+django-discover-runner>=1.0
