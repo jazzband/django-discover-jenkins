@@ -1,6 +1,8 @@
 django-discover-jenkins
 =======================
 
+[![Build Status](https://drone.io/github.com/lincolnloop/django-discover-jenkins/status.png)](https://drone.io/github.com/lincolnloop/django-discover-jenkins/latest)
+
 A streamlined fork of django-jenkins designed to work with the default test command and the discover runner.
 
 [Read the Docs](https://django-discover-jenkins.readthedocs.org/)
