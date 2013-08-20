@@ -11,8 +11,8 @@ Settings
   Default value::
 
     TEST_TASKS = (
-        'discover_jenkins.tasks.pylint.PyLintTask',
-        'discover_jenkins.tasks.coverage.CoverageTask',
+        'discover_jenkins.tasks.run_pylint.PyLintTask',
+        'discover_jenkins.tasks.with_coverage.CoverageTask',
     )
 
 * ``TEST_OUTPUT_DIR``
