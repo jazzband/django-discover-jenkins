@@ -7,7 +7,7 @@ Tasks
 CoverageTask
 ============
 
-``discover_runner.tasks.with_coverage.CoverageTask``
+``discover_jenkins.tasks.with_coverage.CoverageTask``
 
 Reports test coverage across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
 
@@ -66,7 +66,7 @@ Settings
 PyLintTask
 ==========
 
-``discover_runner.tasks.run_pylint.PyLintTask``
+``discover_jenkins.tasks.run_pylint.PyLintTask``
 
 Runs pylint across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
 
@@ -84,7 +84,7 @@ Settings
 JSHintTask
 ==========
 
-``discover_runner.tasks.run_jshint.JSHintTask``
+``discover_jenkins.tasks.run_jshint.JSHintTask``
 
 Runs jshint across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
 
@@ -118,6 +118,6 @@ Settings
 SlocCountTask
 =============
 
-``discover_runner.tasks.run_sloccount.SlocCountTask``
+``discover_jenkins.tasks.run_sloccount.SlocCountTask``
 
 Run sloccount across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
