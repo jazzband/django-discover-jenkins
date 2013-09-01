@@ -121,3 +121,10 @@ SlocCountTask
 ``discover_jenkins.tasks.run_sloccount.SlocCountTask``
 
 Run sloccount across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
+
+Pep8Task
+========
+
+``discover_jenkins.tasks.run_pep8.Pep8Task``
+
+Run pep8 across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
