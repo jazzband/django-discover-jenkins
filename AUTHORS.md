@@ -2,6 +2,9 @@ Authors
 =======
 
 * Brandon Konkle (https://github.com/bkonkle)
+* Jeff Triplett (https://github.com/jefftriplett)
+* Vladimir Iakovlev (https://github.com/nvbn)
+* Nick Lang (https://github.com/fxdgear)
 
 This project is a fork of the django-jenkins project. It would not be possible without the effort of Mikhail Podgurskiy and the django-jenkins project contributors. Thank you!
 
