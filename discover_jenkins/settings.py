@@ -2,8 +2,8 @@ from django.conf import settings
 
 
 TASKS = getattr(settings, 'TEST_TASKS', (
-    'discover_jenkins.tasks.pylint.PyLintTask',
-    'discover_jenkins.tasks.coverage.CoverageTask',
+    'discover_jenkins.tasks.run_pylint.PyLintTask',
+    'discover_jenkins.tasks.with_coverage.CoverageTask',
 ))
 OUTPUT_DIR = getattr(settings, 'TEST_OUTPUT_DIR', 'reports')
 PYLINT_RCFILE = getattr(settings, 'TEST_PYLINT_RCFILE', 'pylint.rc')
