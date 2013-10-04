@@ -1,7 +1,7 @@
 django-discover-jenkins
 =======================
 
-[![Build Status](https://drone.io/github.com/lincolnloop/django-discover-jenkins/status.png)](https://drone.io/github.com/lincolnloop/django-discover-jenkins/latest) [![PyPi Downloads](https://pypip.in/d/django-discover-jenkins/badge.png)](https://crate.io/packages/django-discover-jenkins/)
+[![Downloads](https://pypip.in/v/django-discover-jenkins/badge.png)](https://crate.io/package/django-discover-jenkins) [![Build Status](https://drone.io/github.com/lincolnloop/django-discover-jenkins/status.png)](https://drone.io/github.com/lincolnloop/django-discover-jenkins/latest) [![PyPi Downloads](https://pypip.in/d/django-discover-jenkins/badge.png)](https://crate.io/packages/django-discover-jenkins/)
 
 A streamlined fork of django-jenkins designed to work with the default test command and the discover runner.
 
