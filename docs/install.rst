@@ -22,7 +22,7 @@ the ``DiscoverCIRunner`` that ``discover_jenkins`` provides::
     TEST_RUNNER = 'discover_jenkins.runner.DiscoverCIRunner'
 
 Even though ``discover_jenkins`` doesn't use app names to discover tests, it
-does use them to handle tasks like coverahe and pylint. Add your desired apps
+does use them to handle tasks like coverage and pylint. Add your desired apps
 to setting called ``TEST_PROJECT_APPS``::
 
     TEST_PROJECT_APPS = (
