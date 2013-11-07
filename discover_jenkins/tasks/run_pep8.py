@@ -79,7 +79,7 @@ class Pep8Task(object):
         )
 
         for location in locations:
-            pep8style.input_dir(location)
+            pep8style.input_dir(os.path.relpath(location))
 
         self.output.close()
 
