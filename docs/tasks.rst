@@ -128,3 +128,10 @@ Pep8Task
 ``discover_jenkins.tasks.run_pep8.Pep8Task``
 
 Run pep8 across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
+
+Flake8Task
+==========
+
+``discover_jenkins.tasks.run_flake8.Flake8Task``
+
+Run flake8 across your apps. Uses the ``TEST_PROJECT_APPS`` setting.
