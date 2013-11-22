@@ -9,10 +9,13 @@ from discover_jenkins.utils import get_app_locations
 
 
 class Flake8Task(Pep8Task):
-    option_list = Pep8Task.option_list + (make_option(
-        '--max-complexity',
-        dest='max_complexity',
-        help='McCabe complexity treshold'),)
+    option_list = Pep8Task.option_list + (
+        make_option(
+            '--max-complexity',
+            dest='max_complexity',
+            help='McCabe complexity threshold',
+        ),
+    )
 
     def __init__(self, **options):
         super(Flake8Task, self).__init__(**options)
