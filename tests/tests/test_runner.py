@@ -33,6 +33,7 @@ class TestCIRunner(TestCase):
         self.assertEqual(runner.get_tasks(),
                          [tasks.with_coverage.CoverageTask,
                           tasks.run_pylint.PyLintTask,
+                          tasks.run_flake8.Flake8Task,
                           tasks.run_jshint.JSHintTask,
                           tasks.run_sloccount.SlocCountTask])
 
@@ -41,7 +42,7 @@ class TestCIRunner(TestCase):
         For now, just do a simple test to make sure the right number of options
         are gleaned from the tasks.
         """
-        self.assertEqual(len(runner.get_task_options()), 14)
+        self.assertEqual(len(runner.get_task_options()), 20)
 
     def test_setup_test_environment(self):
         """

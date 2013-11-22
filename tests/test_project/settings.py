@@ -32,6 +32,7 @@ TEST_RUNNER = 'discover_jenkins.runner.DiscoverCIRunner'
 TEST_TASKS = (
     'discover_jenkins.tasks.with_coverage.CoverageTask',
     'discover_jenkins.tasks.run_pylint.PyLintTask',
+    'discover_jenkins.tasks.run_flake8.Flake8Task',
     'discover_jenkins.tasks.run_jshint.JSHintTask',
     'discover_jenkins.tasks.run_sloccount.SlocCountTask',
 )
