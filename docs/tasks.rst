@@ -39,25 +39,19 @@ Settings
 
     TEST_COVERAGE_MEASURE_BRANCH = True
 
-* ``TEST_COVERAGE_EXCLUDES``
+* ``TEST_COVERAGE_EXCLUDE_PATHS``
 
-  Module names to exclude.
-
-  Default value::
-
-    TEST_COVERAGE_EXCLUDES = []
-
-* ``TEST_COVERAGE_EXCLUDES_FOLDERS``
-
-  Extra folders to exclude.
+  File paths to exclude. Can be myapp/admin.py or myapp/management/*
 
   Default value::
 
-    TEST_COVERAGE_EXCLUDES_FOLDERS = []
+    TEST_COVERAGE_EXCLUDE_PATHS = []
 
 * ``TEST_COVERAGE_RCFILE``
 
-  Specify configuration file.
+  Specify configuration file. Please note if you set the ``TEST_COVERAGE_EXCLUDE_PATHS``
+  setting, coverage will ignore your coverage.rc file. So if you want to customize
+  coverage settings only use this file and not the other settings.
 
   Default value::
 
