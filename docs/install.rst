@@ -5,7 +5,7 @@ Installation
 
 From PyPI::
 
-    pip install django-discover-runner
+    pip install django-discover-jenkins
 
 Configuration
 -------------
