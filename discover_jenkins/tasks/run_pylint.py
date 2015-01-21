@@ -56,5 +56,8 @@ class PyLintTask(object):
                 args += ['--errors-only']
             args += PROJECT_APPS
 
-            lint.Run(args, reporter=ParseableTextReporter(output=self.output),
-                                                          exit=False)
+            lint.Run(
+                args,
+                reporter=ParseableTextReporter(output=self.output),
+                exit=False
+            )
