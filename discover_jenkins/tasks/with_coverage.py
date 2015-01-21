@@ -3,8 +3,6 @@
 import os
 from optparse import make_option
 
-from django.utils.importlib import import_module
-
 from coverage.control import coverage
 
 from .. import settings
