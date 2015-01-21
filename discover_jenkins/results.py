@@ -203,7 +203,7 @@ class XMLTestResult(TextTestResult):
                             'message': smart_text(test_info.err[1])
                         }))
                         document.characters(self._exc_info_to_string(
-                                        test_info.err, test_info.test_method))
+                                        test_info.err, test_info.test_method).decode('utf-8'))
                         document.endElement('failure')
                     elif test_info.result == \
                                     TestInfo.RESULT.UNEXPECTED_SUCCESS:
