@@ -49,9 +49,9 @@ class CoverageTask(object):
         make_option(
             "--coverage-exclude",
             action="append",
-            default=settings.COVERAGE_EXCLUDES,
+            default=settings.COVERAGE_EXCLUDE_PATHS,
             dest="coverage_excludes",
-            help="Module name to exclude"
+            help="Paths to be excluded from coverage"
         )
     )
 
@@ -61,21 +61,7 @@ class CoverageTask(object):
         self.html_dir = options['coverage_html_report_dir']
         self.branch = options['coverage_measure_branch']
 
-        self.exclude_locations = []
-        modnames = options['coverage_excludes']
-        for modname in modnames:
-            try:
-                self.exclude_locations.append(
-                    os.path.dirname(
-                        import_module(modname).__file__
-                    )
-                )
-            except ImportError:
-                pass
-
-        # Extra folders to exclude. Particularly useful to specify things like
-        # apps/company/migrations/*
-        self.exclude_locations.extend(settings.COVERAGE_EXCLUDES_FOLDERS)
+        self.exclude_locations = options['coverage_excludes'] or None
 
         self.coverage = coverage(
             branch=self.branch,
@@ -89,24 +75,27 @@ class CoverageTask(object):
 
     def teardown_test_environment(self, **kwargs):
         self.coverage.stop()
+        self.coverage._harvest_data()
 
         morfs = [filename for filename in self.coverage.data.measured_files()
                  if self.want_file(filename)]
 
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
-        self.coverage.xml_report(morfs=morfs,
-                                 outfile=os.path.join(
-                                        self.output_dir, 'coverage.xml'))
+
+        self.coverage.xml_report(
+            morfs=morfs,
+            outfile=os.path.join(self.output_dir, 'coverage.xml')
+        )
 
         if self.html_dir:
-            self.coverage.html_report(morfs=morfs, directory=self.html_dir)
+            self.coverage.html_report(
+                morfs=morfs,
+                directory=self.html_dir
+            )
 
     def want_file(self, filename):
         if not self.with_migrations and '/migrations/' in filename:
             return False
-        for location in self.exclude_locations:
-            if filename.startswith(location):
-                return False
 
         return True
