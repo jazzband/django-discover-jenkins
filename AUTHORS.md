@@ -2,6 +2,7 @@ Authors
 =======
 
 * Brandon Konkle (https://github.com/bkonkle)
+* Camilo Nova (https://github.com/camilonova)
 * Jeff Triplett (https://github.com/jefftriplett)
 * Vladimir Iakovlev (https://github.com/nvbn)
 * Nick Lang (https://github.com/fxdgear)

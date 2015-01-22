@@ -7,6 +7,10 @@ From PyPI::
 
     pip install django-discover-jenkins
 
+Due to a bug in the coverage library you have to use this specific version::
+
+    pip install coverage==3.5
+
 Configuration
 -------------
 
