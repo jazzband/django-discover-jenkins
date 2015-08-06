@@ -2,27 +2,29 @@
 import os
 import sys
 from optparse import make_option
-
+import django
 from discover_jenkins.utils import check_output, get_app_locations
 
 
 class SlocCountTask(object):
-    option_list = (
-        make_option(
-            "--sloccount-with-migrations",
-            action="store_true",
-            default=False,
-            dest="sloccount_with_migrations",
-            help="Count migrations sloc."
-        ),
-        make_option(
-            '--sloccount-stdout',
-            action='store_true',
-            dest='sloccount_stdout',
-            default=False,
-            help='Print the sloccount totals instead of saving them to a file'
-        ),
-    )
+
+    if django.VERSION < (1, 8):
+        option_list = (
+            make_option(
+                "--sloccount-with-migrations",
+                action="store_true",
+                default=False,
+                dest="sloccount_with_migrations",
+                help="Count migrations sloc."
+            ),
+            make_option(
+                '--sloccount-stdout',
+                action='store_true',
+                dest='sloccount_stdout',
+                default=False,
+                help='Print the sloccount totals instead of saving them to a file'
+            ),
+        )
 
     def __init__(self, **options):
         self.with_migrations = options['sloccount_with_migrations']
@@ -35,6 +37,16 @@ class SlocCountTask(object):
                 os.makedirs(output_dir)
             self.output = open(os.path.join(output_dir,
                                             'sloccount.report'), 'w')
+
+    @classmethod
+    def add_arguments(cls, parser):
+        parser.add_argument("--sloccount-with-migrations",
+            action="store_true", default=False, dest="sloccount_with_migrations",
+            help="Count migrations sloc."
+        )
+        parser.add_argument("--sloccount-stdout",
+            action="store_true", dest="sloccount_stdout", default=False,
+            help="Print the sloccount totals instead of saving them to a file")
 
     def teardown_test_environment(self, **kwargs):
         locations = get_app_locations()

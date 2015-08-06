@@ -2,6 +2,7 @@ import inspect
 
 from optparse import make_option
 
+import django
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import unittest
 from django.utils.importlib import import_module
@@ -55,22 +56,23 @@ class CIRunner(object):
     A Django test runner mixin that runs tasks for Jenkins and dumps the
     results to an XML file.
     """
-    option_list = get_task_options() + (
-        make_option(
-            '--jenkins',
-            action='store_true',
-            dest='jenkins',
-            default=False,
-            help='Process the Jenkins tasks from TEST_JENKINS_TASKS.'
-        ),
-        make_option(
-            '--output-dir',
-            action='store',
-            dest='output_dir',
-            default=OUTPUT_DIR,
-            help='Top level of project for unittest discovery.'
-        ),
-    )
+    if django.VERSION < (1, 8):
+        option_list = get_task_options() + (
+            make_option(
+                '--jenkins',
+                action='store_true',
+                dest='jenkins',
+                default=False,
+                help='Process the Jenkins tasks from TEST_JENKINS_TASKS.'
+            ),
+            make_option(
+                '--output-dir',
+                action='store',
+                dest='output_dir',
+                default=OUTPUT_DIR,
+                help='Top level of project for unittest discovery.'
+            ),
+        )
 
     def __init__(self, jenkins=False, output_dir=None, **options):
         super(CIRunner, self).__init__(**options)
@@ -87,6 +89,20 @@ class CIRunner(object):
             for task_class in task_classes:
                 instance = task_class(output_dir=output_dir, **options)
                 self.tasks.append(instance)
+
+    @classmethod
+    def add_arguments(cls, parser):
+        task_classes = get_tasks()
+        for task_cls in task_classes:
+            if hasattr(task_cls, 'add_arguments'):
+                task_cls.add_arguments(parser)
+
+        parser.add_argument('--jenkins',
+            action='store_true', dest='jenkins', default=False,
+            help='Process the Jenkins tasks from TEST_JENKINS_TASKS.')
+        parser.add_argument('--output-dir',
+            action='store', dest='output_dir', default=OUTPUT_DIR,
+            help='Top level of project for unittest discovery.')
 
     def setup_test_environment(self, **kwargs):
         super(CIRunner, self).setup_test_environment(**kwargs)
@@ -130,4 +146,11 @@ class CIRunner(object):
 
 class DiscoverCIRunner(CIRunner, DiscoverRunner):
     """The CIRunner mixin applied to the discover runner"""
-    option_list = DiscoverRunner.option_list + CIRunner.option_list
+
+    if django.VERSION < (1, 8):
+        option_list = DiscoverRunner.option_list + CIRunner.option_list
+
+    @classmethod
+    def add_arguments(cls, parser):
+        DiscoverRunner.add_arguments(parser)
+        CIRunner.add_arguments(parser)
