@@ -4,6 +4,8 @@ import os
 import sys
 from optparse import make_option
 
+import django
+
 from pylint import lint
 from pylint.reporters.text import ParseableTextReporter
 
@@ -21,21 +23,23 @@ def default_config_path():
 
 
 class PyLintTask(object):
-    option_list = (
-        make_option(
-            "--pylint-rcfile",
-            dest="pylint_rcfile",
-            default=None,
-            help="pylint configuration file"
-        ),
-        make_option(
-            "--pylint-errors-only",
-            dest="pylint_errors_only",
-            action="store_true",
-            default=False,
-            help="pylint output errors only mode"
-        ),
-    )
+
+    if django.VERSION < (1, 8):
+        option_list = (
+            make_option(
+                "--pylint-rcfile",
+                dest="pylint_rcfile",
+                default=None,
+                help="pylint configuration file"
+            ),
+            make_option(
+                "--pylint-errors-only",
+                dest="pylint_errors_only",
+                action="store_true",
+                default=False,
+                help="pylint output errors only mode"
+            ),
+        )
 
     def __init__(self, **options):
         self.config_path = options['pylint_rcfile'] or default_config_path()
@@ -48,6 +52,15 @@ class PyLintTask(object):
             self.output = open(os.path.join(output_dir, 'pylint.report'), 'w')
         else:
             self.output = sys.stdout
+
+    @classmethod
+    def add_arguments(cls, parser):
+        parser.add_argument("--pylint-rcfile",
+            dest="pylint_rcfile", default=None,
+            help="pylint configuration file")
+        parser.add_argument("--pylint-errors-only",
+            dest="pylint_errors_only", action="store_true", default=False,
+            help="pylint output errors only mode")
 
     def teardown_test_environment(self, **kwargs):
         if PROJECT_APPS:

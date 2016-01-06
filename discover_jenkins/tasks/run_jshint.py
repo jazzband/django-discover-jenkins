@@ -6,6 +6,7 @@ import fnmatch
 import subprocess
 from optparse import make_option
 
+import django
 from django.conf import settings as django_settings
 
 from ..utils import CalledProcessError, get_app_locations
@@ -13,41 +14,43 @@ from ..settings import JSHINT_CHECKED_FILES, JSHINT_RCFILE, JSHINT_EXCLUDE
 
 
 class JSHintTask(object):
-    option_list = (
-        make_option(
-            "--jshint-no-staticdirs",
-            dest="jshint-no-staticdirs",
-            default=False,
-            action="store_true",
-            help="Don't check js files located in STATICFILES_DIRS settings"
-        ),
-        make_option(
-            "--jshint-with-minjs",
-            dest="jshint_with-minjs",
-            default=False,
-            action="store_true",
-            help="Do not ignore .min.js files"
-        ),
-        make_option(
-            "--jshint-exclude",
-            dest="jshint_exclude",
-            default=JSHINT_EXCLUDE,
-            help="Exclude patterns"
-        ),
-        make_option(
-            '--jshint-stdout',
-            action='store_true',
-            dest='jshint_stdout',
-            default=False,
-            help='Print the jshint output instead of storing it in a file'
-        ),
-        make_option(
-            '--jshint-rcfile',
-            dest='jshint_rcfile',
-            default=JSHINT_RCFILE,
-            help='Provide an rcfile for jshint'
-        ),
-    )
+
+    if django.VERSION < (1, 8):
+        option_list = (
+            make_option(
+                "--jshint-no-staticdirs",
+                dest="jshint-no-staticdirs",
+                default=False,
+                action="store_true",
+                help="Don't check js files located in STATICFILES_DIRS settings"
+            ),
+            make_option(
+                "--jshint-with-minjs",
+                dest="jshint_with-minjs",
+                default=False,
+                action="store_true",
+                help="Do not ignore .min.js files"
+            ),
+            make_option(
+                "--jshint-exclude",
+                dest="jshint_exclude",
+                default=JSHINT_EXCLUDE,
+                help="Exclude patterns"
+            ),
+            make_option(
+                '--jshint-stdout',
+                action='store_true',
+                dest='jshint_stdout',
+                default=False,
+                help='Print the jshint output instead of storing it in a file'
+            ),
+            make_option(
+                '--jshint-rcfile',
+                dest='jshint_rcfile',
+                default=JSHINT_RCFILE,
+                help='Provide an rcfile for jshint'
+            ),
+        )
 
     def __init__(self, **options):
         self.to_stdout = options['jshint_stdout']
@@ -67,6 +70,24 @@ class JSHintTask(object):
         self.exclude = options['jshint_exclude']
         if isinstance(self.exclude, str):
             self.exclude = self.exclude.split(',')
+
+    @classmethod
+    def add_arguments(cls, parser):
+        parser.add_argument("--jshint-no-staticdirs",
+            dest="jshint-no-staticdirs", default=False, action="store_true",
+            help="Don't check js files located in STATICFILES_DIRS settings")
+        parser.add_argument("--jshint-with-minjs",
+            dest="jshint_with-minjs", default=False, action="store_true",
+            help="Do not ignore .min.js files")
+        parser.add_argument("--jshint-exclude",
+            dest="jshint_exclude", default=JSHINT_EXCLUDE,
+            help="Exclude patterns")
+        parser.add_argument('--jshint-stdout',
+            action='store_true', dest='jshint_stdout', default=False,
+            help='Print the jshint output instead of storing it in a file')
+        parser.add_argument('--jshint-rcfile',
+            dest='jshint_rcfile', default=JSHINT_RCFILE,
+            help='Provide an rcfile for jshint')
 
     def teardown_test_environment(self, **kwargs):
         files = [path for path in self.static_files_iterator()]

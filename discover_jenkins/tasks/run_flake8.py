@@ -4,18 +4,21 @@ import sys
 import pep8
 from flake8.engine import get_style_guide
 from optparse import make_option
+import django
 from discover_jenkins.tasks.run_pep8 import Pep8Task
 from discover_jenkins.utils import get_app_locations
 
 
 class Flake8Task(Pep8Task):
-    option_list = Pep8Task.option_list + (
-        make_option(
-            '--max-complexity',
-            dest='max_complexity',
-            help='McCabe complexity threshold',
-        ),
-    )
+
+    if django.VERSION < (1, 8):
+        option_list = Pep8Task.option_list + (
+            make_option(
+                '--max-complexity',
+                dest='max_complexity',
+                help='McCabe complexity threshold',
+            ),
+        )
 
     def __init__(self, **options):
         super(Flake8Task, self).__init__(**options)
@@ -30,6 +33,13 @@ class Flake8Task(Pep8Task):
 
         if options['max_complexity']:
             self.pep8_options['max_complexity'] = int(options['max_complexity'])
+
+    @classmethod
+    def add_arguments(cls, parser):
+        Pep8Task.add_arguments(parser)
+        parser.add_argument('--max-complexity',
+            dest='max_complexity',
+            help='McCabe complexity threshold')
 
     def teardown_test_environment(self, **kwargs):
         class JenkinsReport(pep8.BaseReport):
