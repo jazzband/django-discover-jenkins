@@ -2,8 +2,9 @@ django-discover-jenkins
 =======================
 
 .. image:: https://jazzband.co/static/img/badge.svg
-    :alt: Jazzband
-    :target: https://jazzband.co/
+   :alt: Jazzband
+   :target: https://jazzband.co/
+
   
 A streamlined fork of django-jenkins designed to work with the default test command and the discover runner.
 
