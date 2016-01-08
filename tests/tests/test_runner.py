@@ -1,4 +1,7 @@
+from unittest import skipIf
+
 from mock import MagicMock, patch
+import django
 from django.test import TestCase
 
 from discover_jenkins import runner, tasks
@@ -37,6 +40,7 @@ class TestCIRunner(TestCase):
                           tasks.run_jshint.JSHintTask,
                           tasks.run_sloccount.SlocCountTask])
 
+    @skipIf(django.VERSION >= (1, 8), "optparse is not used on Django 1.8+")
     def test_get_task_options(self):
         """
         For now, just do a simple test to make sure the right number of options

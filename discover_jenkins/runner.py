@@ -4,8 +4,16 @@ from optparse import make_option
 
 import django
 from django.core.exceptions import ImproperlyConfigured
-from django.utils import unittest
-from django.utils.importlib import import_module
+
+try:
+    import unittest
+except ImportError:
+    from django.utils import unittest
+
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
 
 try:
     # Django 1.6

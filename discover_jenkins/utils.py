@@ -1,7 +1,10 @@
 import os.path
 import subprocess
 
-from django.utils.importlib import import_module
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
 
 from discover_jenkins.settings import PROJECT_APPS
 
