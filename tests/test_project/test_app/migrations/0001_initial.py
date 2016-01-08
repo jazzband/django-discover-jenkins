@@ -1,9 +1,5 @@
-from south.v2 import SchemaMigration
+from django.db import migrations
 
-class Migration(SchemaMigration):
-    def forwards(self, orm):
-        a = 1 # pyflakes/pylint violation
-        pass
 
-    def backwards(self, orm):
-        pass
+class Migration(migrations.Migration):
+    a = 1 # pyflakes/pylint violation

@@ -3,8 +3,12 @@
 import os
 from optparse import make_option
 
-from coverage.control import coverage
 import django
+
+try:
+    from coverage import coverage
+except ImportError:
+    from coverage.control import coverage
 
 from .. import settings
 

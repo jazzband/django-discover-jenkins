@@ -4,8 +4,12 @@ from datetime import datetime
 from itertools import groupby
 from xml.sax.saxutils import XMLGenerator
 from xml.sax.xmlreader import AttributesImpl
-from django.utils.unittest import TextTestResult
 from discover_jenkins.utils import total_seconds
+
+try:
+    from unittest import TextTestResult
+except ImportError:
+    from django.utils.unittest import TextTestResult
 
 try:
     from django.utils.encoding import smart_text
