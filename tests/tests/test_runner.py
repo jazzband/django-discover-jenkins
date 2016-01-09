@@ -1,10 +1,14 @@
 from unittest import skipIf
 
-from mock import MagicMock, patch
 import django
 from django.test import TestCase
 
 from discover_jenkins import runner, tasks
+
+try:
+    from unittest.mock import MagicMock, patch
+except ImportError:
+    from mock import MagicMock, patch
 
 
 class FakeTestRunner(object):
