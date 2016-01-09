@@ -1,9 +1,8 @@
 from unittest import skipIf
 
 import django
-from django.test import TestCase
-
 from discover_jenkins import runner, tasks
+from django.test import TestCase
 
 try:
     from unittest.mock import MagicMock, patch

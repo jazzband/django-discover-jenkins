@@ -1,9 +1,8 @@
 import os
 
-from django.test import TestCase
-
 import discover_jenkins
 import test_project
+from django.test import TestCase
 
 
 class TestUtils(TestCase):

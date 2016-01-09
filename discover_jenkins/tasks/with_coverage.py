@@ -5,12 +5,12 @@ from optparse import make_option
 
 import django
 
+from .. import settings
+
 try:
     from coverage import coverage
 except ImportError:
     from coverage.control import coverage
-
-from .. import settings
 
 
 def default_config_path():

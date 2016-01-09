@@ -1,12 +1,14 @@
 # coding: utf-8
 import os
 import sys
+from optparse import make_option
+
+import django
 import pep8
 from flake8.engine import get_style_guide
-from optparse import make_option
-import django
-from discover_jenkins.tasks.run_pep8 import Pep8Task
-from discover_jenkins.utils import get_app_locations
+
+from ..utils import get_app_locations
+from .run_pep8 import Pep8Task
 
 
 class Flake8Task(Pep8Task):

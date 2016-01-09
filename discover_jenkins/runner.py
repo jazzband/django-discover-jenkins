@@ -1,13 +1,13 @@
 import unittest
-from optparse import make_option
 from importlib import import_module
+from optparse import make_option
 
 import django
 from django.core.exceptions import ImproperlyConfigured
 from django.test.runner import DiscoverRunner
 
 from .results import XMLTestResult
-from .settings import TASKS, OUTPUT_DIR
+from .settings import OUTPUT_DIR, TASKS
 
 
 def get_tasks():

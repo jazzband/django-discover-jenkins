@@ -5,11 +5,10 @@ import sys
 from optparse import make_option
 
 import django
-
 from pylint import lint
 from pylint.reporters.text import ParseableTextReporter
 
-from ..settings import PYLINT_RCFILE, PROJECT_APPS
+from ..settings import PROJECT_APPS, PYLINT_RCFILE
 
 
 def default_config_path():

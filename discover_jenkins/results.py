@@ -2,9 +2,9 @@ import os
 import traceback
 from datetime import datetime
 from itertools import groupby
+from unittest import TextTestResult
 from xml.sax.saxutils import XMLGenerator
 from xml.sax.xmlreader import AttributesImpl
-from unittest import TextTestResult
 
 from django.utils.encoding import smart_text
 

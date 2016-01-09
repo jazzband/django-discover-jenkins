@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
 import codecs
 import fnmatch
+import os
 import subprocess
+import sys
 from optparse import make_option
 
 import django
 from django.conf import settings as django_settings
 
+from ..settings import JSHINT_CHECKED_FILES, JSHINT_EXCLUDE, JSHINT_RCFILE
 from ..utils import CalledProcessError, get_app_locations
-from ..settings import JSHINT_CHECKED_FILES, JSHINT_RCFILE, JSHINT_EXCLUDE
 
 
 class JSHintTask(object):

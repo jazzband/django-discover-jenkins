@@ -1,6 +1,5 @@
 from django.conf import settings
 
-
 TASKS = getattr(settings, 'TEST_TASKS', (
     'discover_jenkins.tasks.run_pylint.PyLintTask',
     'discover_jenkins.tasks.with_coverage.CoverageTask',

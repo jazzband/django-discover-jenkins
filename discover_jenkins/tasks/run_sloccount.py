@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
+import subprocess
 import sys
 from optparse import make_option
-import subprocess
+
 import django
-from discover_jenkins.utils import get_app_locations
+
+from ..utils import get_app_locations
 
 
 class SlocCountTask(object):
