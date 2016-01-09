@@ -1,6 +1,7 @@
 django-discover-jenkins
 =======================
 
+[![Build Status](https://travis-ci.org/jazzband/django-discover-jenkins.svg?branch=master)](https://travis-ci.org/jazzband/django-discover-jenkins)
 [![Jazzband](https://jazzband.co/static/img/badge.svg)](https://jazzband.co/)
 
   
