@@ -172,9 +172,9 @@ class XMLTestResult(TextTestResult):
             document.startDocument()
             document.startElement('testsuites', AttributesImpl({}))
 
-            suites = groupby(self.testInfos,
-                             key=lambda test_info: self.test_case_name(
-                                                        test_info.test_method))
+            suites = groupby(
+                self.testInfos, key=lambda test_info: self.test_case_name(test_info.test_method)
+            )
             for suite_name, suite in suites:
                 document.startElement('testsuite',
                                       AttributesImpl({'name': suite_name}))
@@ -192,18 +192,17 @@ class XMLTestResult(TextTestResult):
                         document.startElement('error', AttributesImpl({
                             'message': smart_text(test_info.err[1])
                         }))
-                        document.characters(self._exc_info_to_string(
-                                        test_info.err, test_info.test_method))
+                        document.characters(self._exc_info_to_string(test_info.err, test_info.test_method))
                         document.endElement('error')
                     elif test_info.result == TestInfo.RESULT.FAILURE:
                         document.startElement('failure', AttributesImpl({
                             'message': smart_text(test_info.err[1])
                         }))
-                        document.characters(self._exc_info_to_string(
-                                        test_info.err, test_info.test_method).decode('utf-8'))
+                        document.characters(
+                            self._exc_info_to_string(test_info.err, test_info.test_method).decode('utf-8')
+                        )
                         document.endElement('failure')
-                    elif test_info.result == \
-                                    TestInfo.RESULT.UNEXPECTED_SUCCESS:
+                    elif test_info.result == TestInfo.RESULT.UNEXPECTED_SUCCESS:
                         document.startElement('error', AttributesImpl({
                             'message': 'Unexpected success'
                         }))

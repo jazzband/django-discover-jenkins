@@ -1,5 +1,3 @@
-import inspect
-
 import unittest
 from optparse import make_option
 from importlib import import_module

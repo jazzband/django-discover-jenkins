@@ -27,7 +27,6 @@ class Runner(runner.CIRunner, FakeTestRunner):
 
 class TestCIRunner(TestCase):
 
-
     def test_get_tasks(self):
         """
         Make sure the correct tasks are imported based on the
@@ -77,4 +76,3 @@ class TestCIRunner(TestCase):
             cirun.teardown_test_environment()
 
         self.assertTrue(mock_task.teardown_test_environment.called)
-

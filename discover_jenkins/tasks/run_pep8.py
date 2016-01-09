@@ -56,8 +56,7 @@ class Pep8Task(object):
         if options['pep8-ignore']:
             self.pep8_options['ignore'] = options['pep8-ignore'].split(',')
         if options['pep8-max-line-length']:
-            self.pep8_options['max_line_length'] = \
-                                                options['pep8-max-line-length']
+            self.pep8_options['max_line_length'] = options['pep8-max-line-length']
 
     @classmethod
     def add_arguments(cls, parser):

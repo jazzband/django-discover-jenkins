@@ -43,8 +43,7 @@ class SlocCountTask(object):
     def add_arguments(cls, parser):
         parser.add_argument("--sloccount-with-migrations",
             action="store_true", default=False, dest="sloccount_with_migrations",
-            help="Count migrations sloc."
-        )
+            help="Count migrations sloc.")
         parser.add_argument("--sloccount-stdout",
             action="store_true", dest="sloccount_stdout", default=False,
             help="Print the sloccount totals instead of saving them to a file")
