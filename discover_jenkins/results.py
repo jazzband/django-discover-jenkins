@@ -6,10 +6,7 @@ from xml.sax.saxutils import XMLGenerator
 from xml.sax.xmlreader import AttributesImpl
 from unittest import TextTestResult
 
-try:
-    from django.utils.encoding import smart_text
-except ImportError:
-    from django.utils.encoding import smart_unicode as smart_text
+from django.utils.encoding import smart_text
 
 STDOUT_LINE = '\nStdout:\n%s'
 STDERR_LINE = '\nStderr:\n%s'

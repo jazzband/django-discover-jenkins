@@ -6,13 +6,7 @@ from importlib import import_module
 
 import django
 from django.core.exceptions import ImproperlyConfigured
-
-try:
-    # Django 1.6
-    from django.test.runner import DiscoverRunner
-except ImportError:
-    # Fallback to third-party app on Django 1.5
-    from discover_runner.runner import DiscoverRunner
+from django.test.runner import DiscoverRunner
 
 from .results import XMLTestResult
 from .settings import TASKS, OUTPUT_DIR
