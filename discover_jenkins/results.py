@@ -4,12 +4,7 @@ from datetime import datetime
 from itertools import groupby
 from xml.sax.saxutils import XMLGenerator
 from xml.sax.xmlreader import AttributesImpl
-from discover_jenkins.utils import total_seconds
-
-try:
-    from unittest import TextTestResult
-except ImportError:
-    from django.utils.unittest import TextTestResult
+from unittest import TextTestResult
 
 try:
     from django.utils.encoding import smart_text
@@ -191,8 +186,9 @@ class XMLTestResult(TextTestResult):
                     document.startElement('testcase', AttributesImpl({
                         'classname': suite_name,
                         'name': self.test_method_name(test_info.test_method),
-                        'time': '%3f' % total_seconds(
-                                    test_info.end_time - test_info.start_time)
+                        'time': '%3f' % (
+                            test_info.end_time - test_info.start_time
+                        ).total_seconds
                     }))
 
                     if test_info.result == TestInfo.RESULT.ERROR:

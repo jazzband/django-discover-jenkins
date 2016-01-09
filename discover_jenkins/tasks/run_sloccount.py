@@ -2,8 +2,9 @@
 import os
 import sys
 from optparse import make_option
+import subprocess
 import django
-from discover_jenkins.utils import check_output, get_app_locations
+from discover_jenkins.utils import get_app_locations
 
 
 class SlocCountTask(object):
@@ -51,7 +52,7 @@ class SlocCountTask(object):
     def teardown_test_environment(self, **kwargs):
         locations = get_app_locations()
 
-        report_output = check_output(
+        report_output = subprocess.check_output(
             ['sloccount', "--duplicates", "--wide", "--details"] + locations
         )
         report_output = report_output.decode('utf-8')

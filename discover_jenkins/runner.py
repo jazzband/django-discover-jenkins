@@ -1,19 +1,11 @@
 import inspect
 
+import unittest
 from optparse import make_option
+from importlib import import_module
 
 import django
 from django.core.exceptions import ImproperlyConfigured
-
-try:
-    import unittest
-except ImportError:
-    from django.utils import unittest
-
-try:
-    from importlib import import_module
-except ImportError:
-    from django.utils.importlib import import_module
 
 try:
     # Django 1.6

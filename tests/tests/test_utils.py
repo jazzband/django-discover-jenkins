@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 
 from django.test import TestCase
 
@@ -8,13 +7,6 @@ import test_project
 
 
 class TestUtils(TestCase):
-
-    def test_total_seconds(self):
-        """
-        The total_seconds util should show that 5 minutes is 300 seconds.
-        """
-        delta = timedelta(minutes=5)
-        self.assertEqual(discover_jenkins.utils.total_seconds(delta), 300)
 
     def test_app_locations(self):
         """

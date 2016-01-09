@@ -5,7 +5,7 @@ import pep8
 from optparse import make_option
 import django
 from django.conf import settings
-from discover_jenkins.utils import check_output, get_app_locations
+from discover_jenkins.utils import get_app_locations
 
 
 class Pep8Task(object):
