@@ -185,7 +185,7 @@ class XMLTestResult(TextTestResult):
                         'name': self.test_method_name(test_info.test_method),
                         'time': '%3f' % (
                             test_info.end_time - test_info.start_time
-                        ).total_seconds
+                        ).total_seconds()
                     }))
 
                     if test_info.result == TestInfo.RESULT.ERROR:
