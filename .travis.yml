@@ -32,7 +32,7 @@ matrix:
     - env: TOXENV=py35-master
 
 install:
-  - pip install tox
+  - pip install tox "virtualenv<14.0"
 
 script:
   - tox
