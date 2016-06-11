@@ -7,7 +7,7 @@ django-discover-jenkins
   
 A streamlined fork of django-jenkins designed to work with the default test command and the discover runner.
 
-[Read the Docs](https://django-discover-jenkins.readthedocs.org/)
+[Read the Docs](https://django-discover-jenkins.readthedocs.io/)
 
 Why?
 ----
