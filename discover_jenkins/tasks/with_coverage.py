@@ -102,7 +102,13 @@ class CoverageTask(object):
 
     def teardown_test_environment(self, **kwargs):
         self.coverage.stop()
-        self.coverage._harvest_data()
+
+        try:
+            self.coverage._harvest_data()
+        except AttributeError:
+            # coverage._harvest_data was renamed to coverage.get_data in
+            # coverage.py 4.0.
+            self.coverage.get_data()
 
         morfs = [filename for filename in self.coverage.data.measured_files()
                  if self.want_file(filename)]
