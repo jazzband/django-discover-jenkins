@@ -102,6 +102,7 @@ class CoverageTask(object):
 
     def teardown_test_environment(self, **kwargs):
         self.coverage.stop()
+        self.coverage._harvest_data()
 
         try:
             self.coverage._harvest_data()
