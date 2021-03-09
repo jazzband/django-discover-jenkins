@@ -8,7 +8,7 @@ env:
   - TOXENV=py27-1.7
   - TOXENV=py27-1.8
   - TOXENV=py27-1.9
-  - TOXENV=py27-master
+  - TOXENV=py27-main
   - TOXENV=py32-1.7
   - TOXENV=py32-1.8
   - TOXENV=py33-1.7
@@ -16,7 +16,7 @@ env:
   - TOXENV=py34-1.7
   - TOXENV=py34-1.8
   - TOXENV=py34-1.9
-  - TOXENV=py34-master
+  - TOXENV=py34-main
 
 matrix:
   include:
@@ -25,11 +25,11 @@ matrix:
     - python: 3.5
       env: TOXENV=py35-1.9
     - python: 3.5
-      env: TOXENV=py35-master
+      env: TOXENV=py35-main
   allow_failures:
-    - env: TOXENV=py27-master
-    - env: TOXENV=py34-master
-    - env: TOXENV=py35-master
+    - env: TOXENV=py27-main
+    - env: TOXENV=py34-main
+    - env: TOXENV=py35-main
 
 install:
   - pip install tox "virtualenv<14.0"
