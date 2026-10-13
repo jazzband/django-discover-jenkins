@@ -1,6 +1,11 @@
 django-discover-jenkins
 =======================
 
+> **Retired:** django-discover-jenkins was retired on October 13, 2026. The
+> repository and PyPI project are archived. Existing releases and documentation
+> remain available, but the project is no longer maintained. See the
+> [retirement record](https://github.com/jazzband/help/issues/451).
+
 [![Build Status](https://travis-ci.org/jazzband/django-discover-jenkins.svg?branch=master)](https://travis-ci.org/jazzband/django-discover-jenkins)
 [![Jazzband](https://jazzband.co/static/img/badge.svg)](https://jazzband.co/)
 
